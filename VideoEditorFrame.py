@@ -1,28 +1,28 @@
-import tkinter as tk
-import tkinter as ttk
-from tkinter import filedialog
-from PIL import Image, ImageTk
+import cv2, sys
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
+class MyApp(QMainWindow):
 
-class MainWindow(tk.Tk):
-    def __init__(self, title):
-        tk.Tk.__init__(self, title)
-        self.ButtonImage = []
-        self.ImageButtonFactory()
+    def __init__(self):
+        super().__init__()
+        self.initUI()
 
+    def initUI(self):
 
-    def ImageButtonFactory(self):
-        self.ImageButtonFrame = tk.Frame(self)
-        self.ButtonImage.append(ImageTk.PhotoImage(Image.open("./src/open.png").resize((80, 80), Image.ANTIALIAS)))
-        button = tk.Button(self.ImageButtonFrame, text="파일 열기", image=self.ButtonImage[0], compound='top', command=self.getFileName)
-        button.grid(column=0, row=0, sticky='WE')
-        self.ButtonImage.append(ImageTk.PhotoImage(Image.open("./src/save.jpg").resize((80, 80), Image.ANTIALIAS)))
-        button = tk.Button(self.ImageButtonFrame, text="r일 저장", image=self.ButtonImage[1], compound='top', command=self.getFileName)
-        button.grid(column=0, row=1, sticky='WE')
-        self.ImageButtonFrame.grid(column = 0, row= 0, rowspan = 2, sticky = "W")
-    def getFileName(self):
-        self.filename = filedialog.askopenfilename(initialdir="./", title="choose your file",
-                                              filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*")))
-mainWindow = MainWindow("title")
+        self.toolbar = QToolBar(self)
+        self.button = QToolButton(self.toolbar)
+        self.button.setIcon(QIcon("./src/open.png"))
+        self.button.setText("파일 열기")
+        self.button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.toolbar.addWidget(self.button)
+        self.addToolBar(Qt.LeftToolBarArea, self.toolbar)
+        self.setWindowTitle('Toolbar')
+        self.setGeometry(300, 300, 300, 200)
+        self.show()
 
-mainWindow.mainloop()
+if __name__ == '__main__':
+   app = QApplication(sys.argv)
+   ex = MyApp()
+   sys.exit(app.exec_())

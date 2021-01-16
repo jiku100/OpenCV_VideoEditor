@@ -1,10 +1,9 @@
+import tkinter as tk
+from PIL import Image, ImageTk
 import cv2
 
-cap = cv2.VideoCapture(0)
 
-while True:
-    _, frame = cap.read()
-    cv2.imshow("asdA", frame)
-    if cv2.waitKey(10) == 27:
-        break
-
+mainWindow = tk.Tk()
+lbl = tk.Label(mainWindow, text = "text", width = 1600, height = 900)
+lbl.grid(column = 0, row = 0, sticky = "NW")
+mainWindow.mainloop()
