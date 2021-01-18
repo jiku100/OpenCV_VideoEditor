@@ -12,15 +12,25 @@ class MyApp(QMainWindow):
     def initUI(self):
 
         self.toolbar = QToolBar(self)
-        self.button = QToolButton(self.toolbar)
-        self.button.setIcon(QIcon("./src/open.png"))
-        self.button.setText("파일 열기")
-        self.button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-        self.toolbar.addWidget(self.button)
+        self.toolbar.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.addToolBar(Qt.LeftToolBarArea, self.toolbar)
+
+        open = QAction("open", self)
+        open.setIcon(QIcon("./src/open.png"))
+        open.triggered.connect(self.add_open)
+        button = QToolButton(self.toolbar)
+        button.setIcon(QIcon("./src/open.png"))
+        button.setText("파일 열기")
+        button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        button.setDefaultAction(open)
+        self.toolbar.addWidget(button)
+
         self.setWindowTitle('Toolbar')
         self.setGeometry(300, 300, 300, 200)
         self.show()
+
+    def add_open(self):
+        FileOpen = QFileDialog.getOpenFileName(self, 'Open file', './')
 
 if __name__ == '__main__':
    app = QApplication(sys.argv)
